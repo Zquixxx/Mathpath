@@ -8,11 +8,12 @@ require("http-proxy")
   .createServer({
     changeOrigin: true, 
     target,
+    agent: null,
     headers: { target }
   })
  .on("proxyReq", (proxyReq, req, res) => {
-  console.log( proxyReq)
-    proxyReq.setHeader('origin', null);
+  // console.log( proxyReq)
+
 
     // proxyReq.headers["access-control-allow-origin"] = "*";
   })
