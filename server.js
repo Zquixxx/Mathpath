@@ -10,8 +10,11 @@ require("http-proxy")
     target,
     headers: { target }
   })
- .on("proxyReq", (proxyRes, req, res) => {
-    proxyRes.headers["access-control-allow-origin"] = "*";
+ .on("proxyReq", (proxyReq, req, res) => {
+  console.log( proxyReq)
+    proxyReq.setHeader('origin', null);
+
+    // proxyReq.headers["access-control-allow-origin"] = "*";
   })
   .on("proxyRes", (proxyRes, req, res) => {
     proxyRes.headers["access-control-allow-origin"] = "*";
