@@ -1,23 +1,33 @@
 const target = "https://www.bitmex.com";
-const origin = "https://observablehq.com";
-
-const time = Date.now();
-let served = 0;
 
 require("http-proxy")
   .createServer({
-    changeOrigin: true, 
+    changeOrigin: true,
     target,
     agent: null,
     headers: { target }
   })
- .on("proxyReq", (proxyReq, req, res) => {
-  // console.log( proxyReq)
-
-
-    // proxyReq.headers["access-control-allow-origin"] = "*";
+  .on("proxyReq", (proxyReq, req, res) => {
+    proxyReq.setHeader("origin", target);
   })
   .on("proxyRes", (proxyRes, req, res) => {
-    proxyRes.headers["access-control-allow-origin"] = "*";
+    if (req.headers["access-control-request-method"]) {
+      res.setHeader(
+        "access-control-allow-methods",
+        req.headers["access-control-request-method"]
+      );
+    }
+
+    if (req.headers["access-control-request-headers"]) {
+      res.setHeader(
+        "access-control-allow-headers",
+        req.headers["access-control-request-headers"]
+      );
+    }
+
+    if (req.headers.origin) {
+      res.setHeader("access-control-allow-origin", req.headers.origin);
+      res.setHeader("access-control-allow-credentials", "true");
+    }
   })
   .listen(process.env.PORT);
