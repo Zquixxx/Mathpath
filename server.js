@@ -1,4 +1,4 @@
-const target = "https://sandbox.tradier.com";
+const target = "https://studychemistry.org";
 
 require("http-proxy")
   .createServer({
