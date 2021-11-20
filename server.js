@@ -1,5 +1,4 @@
 const target = "https://studychemistry.org";
-
 require("http-proxy")
   .createServer({
     changeOrigin: true,
